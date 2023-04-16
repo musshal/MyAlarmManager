@@ -28,8 +28,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
         binding?.btnSetOnceAlarm?.setOnClickListener(this)
         binding?.btnRepeatingTime?.setOnClickListener(this)
         binding?.btnSetRepeatingAlarm?.setOnClickListener(this)
-
-        alarmReceiver = AlarmReceiver()
+        binding?.btnCancelRepeatingAlarm?.setOnClickListener(this)
 
         alarmReceiver = AlarmReceiver()
     }
@@ -63,6 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
                 alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
                     repeatTime, repeatMessage)
             }
+            R.id.btn_cancel_repeating_alarm -> alarmReceiver.cancelAlarm(this, AlarmReceiver.TYPE_REPEATING)
         }
     }
 
