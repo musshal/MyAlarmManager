@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
         binding?.btnOnceDate?.setOnClickListener(this)
         binding?.btnOnceTime?.setOnClickListener(this)
         binding?.btnSetOnceAlarm?.setOnClickListener(this)
+        binding?.btnRepeatingTime?.setOnClickListener(this)
+        binding?.btnSetRepeatingAlarm?.setOnClickListener(this)
+
+        alarmReceiver = AlarmReceiver()
 
         alarmReceiver = AlarmReceiver()
     }
@@ -49,6 +53,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
                     onceTime,
                     onceMessage)
             }
+            R.id.btn_repeating_time -> {
+                val timePickerFragmentRepeat = TimePickerFragment()
+                timePickerFragmentRepeat.show(supportFragmentManager, TIME_PICKER_REPEAT_TAG)
+            }
+            R.id.btn_set_repeating_alarm -> {
+                val repeatTime = binding?.tvRepeatingTime?.text.toString()
+                val repeatMessage = binding?.edtRepeatingMessage?.text.toString()
+                alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
+                    repeatTime, repeatMessage)
+            }
         }
     }
 
@@ -65,7 +79,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
         val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         when (tag) {
             TIME_PICKER_ONCE_TAG -> binding?.tvOnceTime?.text = dateFormat.format(calendar.time)
-            TIME_PICKER_REPEAT_TAG -> {}
+            TIME_PICKER_REPEAT_TAG -> binding?.tvRepeatingTime?.text = dateFormat.format(calendar.time)
             else -> {
             }
         }
